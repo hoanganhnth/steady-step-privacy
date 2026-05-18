@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina - Yêu Cầu Xóa Tài Khoản (Account Deletion Request)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0F0D15;
+            --surface-color: rgba(30, 27, 36, 0.7);
+            --border-color: rgba(55, 51, 62, 0.6);
+            --primary-color: #7C3AED;
+            --primary-glow: rgba(124, 58, 237, 0.4);
+            --accent-color: #03B5D3;
+            --accent-glow: rgba(3, 181, 211, 0.3);
+            --error-color: #EF4444;
+            --text-main: #FFFFFF;
+            --text-muted: #CCC3D8;
+            --text-dim: #8E849B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glowing Backgrounds */
+        .glow-top {
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(15, 13, 21, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-bottom {
+            position: fixed;
+            bottom: -300px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(15, 13, 21, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Tech Grid Background */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            position: relative;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            box-shadow: 0 8px 32px var(--primary-glow);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .logo-icon {
+            font-size: 36px;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #FFFFFF, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-dim);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        /* Glassmorphic Cards */
+        .card {
+            background: var(--surface-color);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(3, 181, 211, 0.4);
+            box-shadow: 0 15px 45px rgba(3, 181, 211, 0.05);
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(to bottom, var(--accent-color), var(--primary-color));
+            border-radius: 2px;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        ol {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .email-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .email-link:hover {
+            color: #FFFFFF;
+            text-decoration: underline;
+        }
+
+        .alert-box {
+            background: rgba(239, 68, 68, 0.1);
+            border-left: 3px solid var(--error-color);
+            padding: 18px 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .alert-title {
+            color: var(--error-color);
+            font-weight: 700;
+            margin-bottom: 6px;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+
+        .footer-text {
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        .footer-text a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 16px;
+            }
+            .card {
+                padding: 24px 20px;
+            }
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-top"></div>
+    <div class="glow-bottom"></div>
+    <div class="grid-pattern"></div>
+
+    <div class="container animate-in">
+        <header>
+            <div class="logo-container">
+                <span class="logo-icon">L</span>
+            </div>
+            <h1>Yêu Cầu Xóa Tài Khoản</h1>
+            <div class="subtitle">STEADY STEP / LUMINA • ACCOUNT DELETION REQUEST</div>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>Cách 1: Xóa trực tiếp trong Ứng dụng (Khuyên dùng)</h2>
+                <p>Cách nhanh nhất để xóa hoàn toàn tài khoản và toàn bộ dữ liệu học tập là thực hiện trực tiếp từ trong ứng dụng. Quá trình này diễn ra <strong>ngay lập tức và không thể đảo ngược</strong>:</p>
+                <ol>
+                    <li>Mở ứng dụng <strong>Lumina (Steady Step)</strong> trên điện thoại.</li>
+                    <li>Truy cập vào mục <strong>Cài đặt (Settings)</strong> từ thanh định hướng.</li>
+                    <li>Chọn tab <strong>Tài khoản (Account)</strong>.</li>
+                    <li>Nhấp vào nút <strong>Xóa Tài Khoản (Delete Account)</strong> màu đỏ ở cuối trang và xác nhận.</li>
+                </ol>
+                <p>Hệ thống sẽ lập tức giải phóng và xóa sạch thông tin tài khoản cùng toàn bộ tiến trình học tập của bạn trên máy chủ Supabase bảo mật.</p>
+            </div>
+
+            <div class="card">
+                <h2>Cách 2: Gửi Yêu Cầu Xóa Qua Email</h2>
+                <p>Nếu bạn đã gỡ cài đặt ứng dụng hoặc muốn chúng tôi xử lý yêu cầu xóa tài khoản một cách thủ công, bạn chỉ cần gửi một email yêu cầu theo hướng dẫn dưới đây:</p>
+                <div class="alert-box">
+                    <div class="alert-title">THÔNG TIN GỬI YÊU CẦU:</div>
+                    <ul>
+                        <li><strong>Địa chỉ nhận email:</strong> <a href="mailto:support@steady-step.app" class="email-link">support@steady-step.app</a></li>
+                        <li><strong>Tiêu đề (Subject):</strong> <code>Yêu cầu xóa tài khoản Lumina (Steady Step)</code></li>
+                        <li><strong>Nội dung cung cấp (Required Info):</strong>
+                            <br>- Địa chỉ Email đăng ký tài khoản của bạn (Google / Apple).
+                            <br>- Lời xác nhận: <em>"Tôi xác nhận muốn xóa vĩnh viễn tài khoản Lumina cùng toàn bộ dữ liệu học tập liên quan."</em>
+                        </li>
+                    </ul>
+                </div>
+                <p><strong>Thời gian xử lý:</strong> Đội ngũ hỗ trợ kỹ thuật của chúng tôi sẽ tiếp nhận yêu cầu và tiến hành xóa sạch mọi dữ liệu của bạn trên hệ thống máy chủ trong vòng <strong>24 đến 48 giờ làm việc</strong> kể từ khi nhận được email. Chúng tôi sẽ gửi email xác nhận cho bạn ngay sau khi hoàn tất.</p>
+            </div>
+
+            <div class="card">
+                <h2>Những Dữ Liệu Nào Sẽ Bị Xóa?</h2>
+                <p>Khi quá trình xóa tài khoản hoàn tất, toàn bộ các danh mục thông tin sau đây của bạn sẽ bị <strong>hủy bỏ vĩnh viễn và không thể khôi phục</strong>:</p>
+                <ol>
+                    <li>Thông tin hồ sơ người dùng (Email, tên hiển thị, ảnh đại diện).</li>
+                    <li>Toàn bộ lịch sử và tiến trình học từ vựng (Từ đang học, điểm Mastery Level, lịch ôn tập lặp lại ngắt quãng SRS).</li>
+                    <li>Thông tin đăng ký thiết bị nhận thông báo nhắc nhở (Token Push Notification).</li>
+                    <li>Mọi cấu hình cá nhân hóa học tập trong ứng dụng.</li>
+                </ol>
+            </div>
+        </main>
+
+        <footer>
+            <p class="footer-text">© 2026 Lumina (Steady Step). Bảo mật & Tiện lợi.</p>
+            <p class="footer-text" style="margin-top: 4px;">Liên hệ: <a href="mailto:support@steady-step.app" class="email-link">support@steady-step.app</a></p>
+        </footer>
+    </div>
+</body>
+</html>
