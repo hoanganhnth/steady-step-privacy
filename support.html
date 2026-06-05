@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steady Step - Hỗ trợ (Support)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="app_logo_512.png">
+    <style>
+        :root {
+            --bg-color: #0F0D15;
+            --surface-color: rgba(30, 27, 36, 0.7);
+            --border-color: rgba(55, 51, 62, 0.6);
+            --primary-color: #7C3AED;
+            --primary-glow: rgba(124, 58, 237, 0.4);
+            --accent-color: #03B5D3;
+            --accent-glow: rgba(3, 181, 211, 0.3);
+            --text-main: #FFFFFF;
+            --text-muted: #CCC3D8;
+            --text-dim: #8E849B;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glowing Backgrounds */
+        .glow-top {
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 500px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, rgba(15, 13, 21, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .glow-bottom {
+            position: fixed;
+            bottom: -300px;
+            left: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, rgba(15, 13, 21, 0) 70%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Tech Grid Background */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            position: relative;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            box-shadow: 0 8px 32px var(--primary-glow);
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .logo-icon {
+            font-size: 36px;
+            color: #FFFFFF;
+            font-weight: bold;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+            background: linear-gradient(to right, #FFFFFF, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: var(--text-dim);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Glassmorphic Cards */
+        .card {
+            background: var(--surface-color);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(124, 58, 237, 0.4);
+            box-shadow: 0 15px 45px rgba(124, 58, 237, 0.1);
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 22px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+
+        li {
+            color: var(--text-muted);
+            font-size: 15px;
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 12px;
+        }
+
+        li::before {
+            content: "✓";
+            color: var(--accent-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .highlight-box {
+            background: rgba(124, 58, 237, 0.1);
+            border-left: 3px solid var(--primary-color);
+            padding: 16px 20px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        a.contact-link {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        a.contact-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--primary-glow);
+        }
+
+        a.policy-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            word-break: break-all;
+        }
+        
+        a.policy-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 60px;
+        }
+
+        .footer-text {
+            color: var(--text-dim);
+            font-size: 13px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 16px;
+            }
+            .card {
+                padding: 24px 20px;
+            }
+            h1 {
+                font-size: 28px;
+            }
+            h2 {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-top"></div>
+    <div class="glow-bottom"></div>
+    <div class="grid-pattern"></div>
+
+    <div class="container animate-in">
+        <header>
+            <div class="logo-container" style="overflow: hidden;">
+                <img src="app_logo_512.png" alt="Steady Step Logo" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <h1>Steady Step Support</h1>
+            <div class="subtitle">TRUNG TÂM HỖ TRỢ • HELP CENTER</div>
+        </header>
+
+        <main>
+            <div class="card">
+                <h2>1. Cần hỗ trợ? (Need help with Steady Step?)</h2>
+                <p>Nếu bạn đang gặp sự cố với Steady Step, chúng tôi luôn ở đây để giúp đỡ. Đừng ngần ngại liên hệ với chúng tôi để được giải quyết nhanh chóng nhất.</p>
+                <a href="mailto:adminsteadystep@gmail.com" class="contact-link">Gửi email cho chúng tôi</a>
+                <p><strong>Email:</strong> adminsteadystep@gmail.com</p>
+                <div class="highlight-box">
+                    Chúng tôi thường cố gắng phản hồi các yêu cầu hỗ trợ trong vòng 48 giờ làm việc.
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. Các vấn đề thường gặp (Common Issues)</h2>
+                <ul>
+                    <li><strong>Vấn đề đăng nhập (Login problems):</strong> Khó khăn khi đăng nhập bằng Google/Apple, hoặc không thể truy cập tài khoản.</li>
+                    <li><strong>Khôi phục giao dịch (Purchase restoration):</strong> Đã nâng cấp Premium nhưng tài khoản chưa được cập nhật trạng thái.</li>
+                    <li><strong>Đồng bộ dữ liệu (Data sync):</strong> Mất dữ liệu tiến trình học hoặc từ vựng không được đồng bộ giữa các thiết bị.</li>
+                    <li><strong>Xóa tài khoản (Account issues):</strong> Yêu cầu xóa tài khoản hoặc dữ liệu học tập.</li>
+                </ul>
+                <p>Vui lòng cung cấp mô tả chi tiết kèm theo ảnh chụp màn hình (nếu có) khi gửi email để chúng tôi có thể hỗ trợ bạn tốt nhất.</p>
+            </div>
+
+            <div class="card">
+                <h2>3. Chính sách Quyền riêng tư (Privacy Policy)</h2>
+                <p>Để tìm hiểu về cách chúng tôi bảo vệ dữ liệu và thông tin cá nhân của bạn, vui lòng truy cập trang Chính sách Quyền riêng tư của Steady Step:</p>
+                <p><a href="https://hoanganhnth.github.io/steady-step-privacy/" class="policy-link">https://hoanganhnth.github.io/steady-step-privacy/</a></p>
+            </div>
+        </main>
+
+        <footer>
+            <p class="footer-text">© 2026 Steady Step. All rights reserved.</p>
+            <p class="footer-text" style="margin-top: 4px;">Designed for language efficiency & high-performance memorization.</p>
+        </footer>
+    </div>
+</body>
+</html>
